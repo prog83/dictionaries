@@ -4,7 +4,7 @@ dictionaries
 
 ## Installation
 
-Download or git clone [source code](https://github.com).
+Download or git clone [source code](https://github.com/prog83/dictionaries).
 
 Use the package manager [npm](https://www.npmjs.com/get-npm) to install.
 
@@ -40,7 +40,7 @@ npm run dev
 
 Ready on http://localhost:3000
 
-Docs on http://localhost:3000/api-docs
+Docs on http://localhost:3000/docs
 
 ### Production
 
@@ -51,7 +51,7 @@ npm run start
 
 Ready on http://localhost:3000
 
-Docs on http://localhost:3000/api-docs
+Docs on http://localhost:3000/docs
 
 ## Contributing
 
