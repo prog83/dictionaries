@@ -1,0 +1,24 @@
+version: '2.1'
+
+services:
+  dictionaries:
+    image: dictionaries
+    container_name: dictionaries
+    build:
+      context: .
+      dockerfile: ./Dockerfile.local
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dictionaries-router.entrypoints=web"
+      - "traefik.http.routers.dictionaries-router.rule=(Host(`develop.webapi.localhost`) || Host(`webapi.localhost`)) && PathPrefix(`/api/v1/dictionaries`)"
+      - "traefik.http.middlewares.dictionaries-stripprefix.stripprefix.prefixes=/api/v1/dictionaries/,/api/v1/dictionaries"
+      - "traefik.http.middlewares.dictionaries-stripprefix.stripprefix.forceSlash=false"
+      - "traefik.http.routers.dictionaries-router.middlewares=dictionaries-stripprefix"
+
+networks:
+  default:
+    name: net
+    external: true
+
+# docker-compose --env-file .env.development -f docker-compose.local.yml up -d 
