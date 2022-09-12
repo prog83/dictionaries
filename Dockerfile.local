@@ -7,7 +7,7 @@ RUN npm run build
 
 FROM node:16-alpine AS server
 WORKDIR /app
-COPY package* ./
+COPY package*.json ./
 RUN npm set legacy-peer-deps=true && npm ci --omit=dev
 COPY --from=builder ./app/build ./build
 
