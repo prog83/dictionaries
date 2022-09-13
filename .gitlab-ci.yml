@@ -50,6 +50,8 @@ test:
   script:
     - echo "DB_USER=$DB_USER" >> .env.test.local
     - echo "DB_PASS=$DB_PASS" >> .env.test.local
+    - cat .env.test.local
+    - ls
     - npm run test
 
 build:app:
