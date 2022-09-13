@@ -39,16 +39,18 @@ lint:
   script:
     - npm run lint
 
-# test:
-#   image: node:16-alpine
-#   stage: test
-#   tags:
-#     - nodejs
-#   only:
-#     - develop
-#     - main
-#   script:
-#     - npm run test
+test:
+  image: node:16-alpine
+  stage: test
+  tags:
+    - nodejs
+  only:
+    - develop
+    - main
+  script:
+    - echo "DB_USER=$DB_USER" >> .env.test.local
+    - echo "DB_PASS=$DB_PASS" >> .env.test.local
+    - npm run test
 
 build:app:
   image: node:16-alpine
@@ -59,6 +61,8 @@ build:app:
     - develop
     - main
   script:
+    - echo "DB_USER=$DB_USER" >> .env.production.local
+    - echo "DB_PASS=$DB_PASS" >> .env.production.local
     - npm run build
   artifacts:
     paths:
