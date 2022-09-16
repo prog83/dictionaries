@@ -1,13 +1,13 @@
 import type { Request, Response, NextFunction } from 'express';
 
-import { unitsService } from 'services';
+import { UnitsService } from 'services';
 import { ApiError } from 'exceptions';
 import type { Unit } from 'types/units';
 
 export default class UnitsController {
   static async read(req: Request, res: Response<Array<Unit>>, next: NextFunction) {
     try {
-      const unitsData = await unitsService.getUnits();
+      const unitsData = await UnitsService.getUnits();
 
       res.json(unitsData);
     } catch (error) {
@@ -18,7 +18,7 @@ export default class UnitsController {
   static async create(req: Request<unknown, unknown, Unit>, res: Response<Unit>, next: NextFunction) {
     try {
       const { id, label } = req.body;
-      const unitData = await unitsService.createUnit({ id, label });
+      const unitData = await UnitsService.createUnit({ id, label });
 
       res.status(201).json(unitData);
     } catch (error) {
@@ -37,7 +37,7 @@ export default class UnitsController {
         throw ApiError.BadRequest('Id має бути цілим числом!');
       }
       const { label } = req.body;
-      const unitData = await unitsService.updateUnit(id, { label });
+      const unitData = await UnitsService.updateUnit(id, { label });
 
       res.json(unitData);
     } catch (error) {
@@ -51,7 +51,7 @@ export default class UnitsController {
       if (!Number.isInteger(id)) {
         throw ApiError.BadRequest('Id має бути цілим числом!');
       }
-      const unitData = await unitsService.getUnit(id);
+      const unitData = await UnitsService.getUnit(id);
 
       res.json(unitData);
     } catch (error) {
