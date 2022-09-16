@@ -4,7 +4,7 @@ dictionaries
 
 ## Installation
 
-Download or git clone [source code](https://github.com/prog83/dictionaries).
+Download or git clone [source code](https://git.dc2.local/o.myronov/dictionaries).
 
 Use the package manager [npm](https://www.npmjs.com/get-npm) to install.
 

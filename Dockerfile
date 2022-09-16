@@ -7,4 +7,5 @@ ENV NODE_ENV=production
 
 EXPOSE 3000
 
-ENTRYPOINT ["node", "./build/app.js"]
+# ENTRYPOINT ["node", "./build/app.js"]
+CMD ["node", "./build/app.js"]

@@ -140,7 +140,7 @@ app.use(rootRouter);
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 
-async function run() {
+const run = async () => {
   try {
     await db.initialize();
 
@@ -150,7 +150,7 @@ async function run() {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 if (require.main === module) {
   run();

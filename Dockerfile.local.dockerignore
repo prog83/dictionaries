@@ -7,9 +7,11 @@
 gitattributes*
 npm-debug*
 
-docker-compose*
+node_modules
 Dockerfile
+build
 README.md
 
+docker-compose*
 .gitlab-ci.yml
 .env.development*
