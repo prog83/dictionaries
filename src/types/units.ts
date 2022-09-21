@@ -1,4 +1,3 @@
-export interface Unit {
-  id: number;
-  label: string;
-}
+import { UnitModel } from 'models';
+
+export type Unit = Pick<UnitModel, 'id' | 'label'>;

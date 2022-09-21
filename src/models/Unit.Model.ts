@@ -2,7 +2,7 @@ import { Entity, PrimaryColumn, CreateDateColumn, UpdateDateColumn, Column } fro
 import { IsNotEmpty, IsInt, IsString, MaxLength } from 'class-validator';
 import { Exclude, Expose } from 'class-transformer';
 
-import { ValidationGroups as Groups } from 'helpers';
+import { ValidatorGroups as Groups } from 'helpers';
 
 @Exclude()
 @Entity('units')

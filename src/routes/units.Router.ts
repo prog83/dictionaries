@@ -3,7 +3,7 @@ import express from 'express';
 import { validateBodyMiddleware } from 'middlewares';
 import { UnitsController } from 'controllers';
 import { UnitModel } from 'models';
-import { ValidationGroups as Groups } from 'helpers';
+import { ValidatorGroups as Groups } from 'helpers';
 
 /**
  *  @swagger

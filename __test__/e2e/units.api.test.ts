@@ -5,7 +5,7 @@ import request from 'supertest';
 import 'env';
 import { app } from 'app';
 import db from 'db';
-import { unitsRepository } from 'repositories';
+import { UnitsRepository } from 'repositories';
 import type { Unit } from 'types/units';
 
 const unit: Unit = {
@@ -18,7 +18,7 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await unitsRepository.removeUnit(unit.id);
+  await UnitsRepository.removeUnit(unit.id);
   await db.destroy();
 });
 

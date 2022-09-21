@@ -1,1 +1,1 @@
-export { default as unitsRepository } from './units.Repository';
+export { default as UnitsRepository } from './Units.Repository';

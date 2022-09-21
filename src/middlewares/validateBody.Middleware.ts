@@ -5,7 +5,7 @@ import { plainToInstance, ClassConstructor } from 'class-transformer';
 import { ValidationError } from 'exceptions';
 
 const validateBody =
-  <T extends {}>(targetClass: ClassConstructor<T>, groups: string[] = []) =>
+  <T extends {}>(targetClass: ClassConstructor<T>, groups: Array<string> = []) =>
   async (req: Request<unknown, unknown, T>, res: Response, next: NextFunction) => {
     try {
       const body = plainToInstance(targetClass, req.body, { groups });
