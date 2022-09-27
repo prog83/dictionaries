@@ -28,16 +28,16 @@ dependency:
     paths:
       - node_modules/
 
-# lint:
-#   image: node:16-alpine
-#   stage: test
-#   tags:
-#     - nodejs
-#   only:
-#     - develop
-#     - main
-#   script:
-#     - npm run lint
+lint:
+  image: node:16-alpine
+  stage: test
+  tags:
+    - nodejs
+  only:
+    - develop
+    - main
+  script:
+    - npm run lint
 
 test:
   image: node:16-alpine
@@ -50,8 +50,6 @@ test:
   script:
     - echo "DB_USER=$DB_USER" >> .env.test.local
     - echo "DB_PASS=$DB_PASS" >> .env.test.local
-    - cat .env.test.local
-    - ls -al
     - npm run test
 
 build:app:
