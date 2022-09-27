@@ -1,16 +1,16 @@
 import db from 'db';
 import { UnitModel } from 'models';
-import type { Unit } from 'types/units';
+import { UnitDto } from 'dtos';
 
 const unitsRepository = db.getRepository(UnitModel);
 
 export default class UnitsRepository {
-  static async createUnit(payload: Unit) {
+  static async createUnit(payload: UnitDto) {
     const unit = unitsRepository.create(payload);
     return unitsRepository.save(unit);
   }
 
-  static async updateUnit(unit: UnitModel, payload: Omit<Unit, 'id'>) {
+  static async updateUnit(unit: UnitModel, payload: Omit<UnitDto, 'id'>) {
     unitsRepository.merge(unit, payload);
     return unitsRepository.save(unit);
   }

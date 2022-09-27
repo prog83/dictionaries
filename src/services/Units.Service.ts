@@ -2,17 +2,16 @@ import { UnitsRepository } from 'repositories';
 
 import { UnitDto } from 'dtos';
 import { ApiError } from 'exceptions';
-import { Unit } from 'types/units';
 
 export default class UnitsService {
-  static async createUnit(payload: Unit) {
+  static async createUnit(payload: UnitDto) {
     const unit = await UnitsRepository.createUnit(payload);
     const unitDto = new UnitDto(unit);
 
     return unitDto;
   }
 
-  static async updateUnit(id: number, payload: Omit<Unit, 'id'>) {
+  static async updateUnit(id: number, payload: Omit<UnitDto, 'id'>) {
     const candidate = await UnitsRepository.getUnit(id);
     if (!candidate) {
       throw ApiError.NotFoundError(`Підрозділ з кодом "${id}" не знайдено!`);

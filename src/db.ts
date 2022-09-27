@@ -1,6 +1,6 @@
 import { DataSource } from 'typeorm';
 
-import { UnitModel } from 'models';
+import { PermissionModel, StaffRoleModel, UnitModel } from 'models';
 
 const db = new DataSource({
   type: 'postgres',
@@ -12,7 +12,7 @@ const db = new DataSource({
   schema: 'dict',
   synchronize: true,
   // logging: true,
-  entities: [UnitModel],
+  entities: [PermissionModel, StaffRoleModel, UnitModel],
   // subscribers: [],
   // migrations: [],
 });

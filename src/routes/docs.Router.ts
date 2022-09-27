@@ -28,7 +28,13 @@ const options = {
       },
     ],
   },
-  apis: ['./build/routes/health.Router.js', './build/routes/docs.Router.js', './build/routes/units.Router.js'],
+  apis: [
+    './build/routes/health.Router.js',
+    './build/routes/docs.Router.js',
+    './build/routes/permissions.Router.js',
+    './build/routes/staffRoles.Router.js',
+    './build/routes/units.Router.js',
+  ],
 };
 const specs = swaggerJsdoc(options);
 

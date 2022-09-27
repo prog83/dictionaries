@@ -3,15 +3,15 @@
   "version": "0.1.0",
   "description": "dictionaries",
   "author": "o.myronov",
-  "main": "build/app.js",
+  "main": "build/main.js",
   "license": "MIT",
   "homepage": "https://git.dc2.local/o.myronov/dictionaries",
   "scripts": {
-    "dev:server": "cross-env NODE_ENV=development NODE_PATH=./build nodemon --inspect ./build/app.js ",
+    "dev:server": "cross-env NODE_ENV=development NODE_PATH=./build nodemon --inspect ./build/main.js ",
     "dev:build": "cross-env NODE_ENV=development && npm run pre:run && tsc --watch -p tsconfig.build.json",
     "dev": "concurrently \"npm:dev:*\"",
     "build": "cross-env NODE_ENV=production && npm run pre:run && tsc -p tsconfig.build.json ",
-    "start": "cross-env NODE_ENV=production NODE_PATH=./build node ./build/app.js",
+    "start": "cross-env NODE_ENV=production NODE_PATH=./build node ./build/main.js",
     "pre:run": "rimraf ./build && mkdir -p ./build && cp .env* ./build",
     "lint": "eslint --ext .ts,.ts ./src",
     "test": "jest -i"

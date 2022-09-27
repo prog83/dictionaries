@@ -29,7 +29,7 @@ app.use(rootRouter);
 app.use(notFoundMiddleware);
 app.use(errorMiddleware);
 
-const run = async () => {
+const bootstrap = async () => {
   try {
     await db.initialize();
 
@@ -42,5 +42,5 @@ const run = async () => {
 };
 
 if (require.main === module) {
-  run();
+  bootstrap();
 }

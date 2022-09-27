@@ -1,15 +1,15 @@
 import express from 'express';
 
 import { validateBodyMiddleware } from 'middlewares';
-import { UnitsController } from 'controllers';
-import { UnitModel } from 'models';
+import { PermissionsController } from 'controllers';
+import { PermissionModel } from 'models';
 import { ValidatorGroups as Groups } from 'helpers';
 
 /**
  *  @swagger
  *  components:
  *    schemas:
- *      UnitDto:
+ *      PermissionDto:
  *        type: object
  *        required:
  *          - id
@@ -19,6 +19,10 @@ import { ValidatorGroups as Groups } from 'helpers';
  *            type: number
  *            description: Id
  *            example: 32767
+ *          alias:
+ *            type: string
+ *            description: Alias ldap
+ *            example: Some text
  *          label:
  *            type: string
  *            description: Label
@@ -28,30 +32,30 @@ import { ValidatorGroups as Groups } from 'helpers';
 /**
  *  @swagger
  *  tags:
- *    name: Units
- *    description: API for units dictionary
+ *    name: Permissions
+ *    description: API for permissions dictionary
  */
 
 const router = express.Router();
 
 /**
  *  @swagger
- *  /units:
+ *  /permissions:
  *    get:
- *      summary: Get units
- *      tags: [Units]
+ *      summary: Get permissions
+ *      tags: [Permissions]
  *      security:
  *        - bearerAuth: []
  *
  *      responses:
  *        200:
- *          description: List units
+ *          description: List permissions
  *          content:
  *            application/json:
  *              schema:
  *                type: array
  *                items:
- *                  $ref: '#/components/schemas/UnitDto'
+ *                  $ref: '#/components/schemas/PermissionDto'
  *        401:
  *          $ref: '#/components/responses/401'
  *        403:
@@ -61,14 +65,14 @@ const router = express.Router();
  *        500:
  *          $ref: '#/components/responses/500'
  */
-router.get('/', UnitsController.read);
+router.get('/', PermissionsController.read);
 
 /**
  *  @swagger
- *  /units:
+ *  /permissions:
  *    post:
- *      summary: Create unit
- *      tags: [Units]
+ *      summary: Create permission
+ *      tags: [Permissions]
  *      security:
  *        - bearerAuth: []
  *      requestBody:
@@ -76,15 +80,15 @@ router.get('/', UnitsController.read);
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/UnitDto'
+ *              $ref: '#/components/schemas/PermissionDto'
  *
  *      responses:
  *        201:
- *          description: Created unit
+ *          description: Created permission
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/UnitDto'
+ *                $ref: '#/components/schemas/PermissionDto'
  *        400:
  *          $ref: '#/components/responses/400'
  *        401:
@@ -96,14 +100,14 @@ router.get('/', UnitsController.read);
  *        500:
  *          $ref: '#/components/responses/500'
  */
-router.post('/', validateBodyMiddleware(UnitModel, [Groups.CREATE]), UnitsController.create);
+router.post('/', validateBodyMiddleware(PermissionModel, [Groups.CREATE]), PermissionsController.create);
 
 /**
  *  @swagger
- *  /units/{id}:
+ *  /permissions/{id}:
  *    put:
- *      summary: Update unit
- *      tags: [Units]
+ *      summary: Update permission
+ *      tags: [Permissions]
  *      security:
  *        - bearerAuth: []
  *      parameters:
@@ -113,7 +117,7 @@ router.post('/', validateBodyMiddleware(UnitModel, [Groups.CREATE]), UnitsContro
  *            type: number
  *            example: 32767
  *          required: true
- *          description: Id unit
+ *          description: Id permission
  *      requestBody:
  *        required: true
  *        content:
@@ -130,11 +134,11 @@ router.post('/', validateBodyMiddleware(UnitModel, [Groups.CREATE]), UnitsContro
  *
  *      responses:
  *        200:
- *          description: Updated unit
+ *          description: Updated permission
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/UnitDto'
+ *                $ref: '#/components/schemas/PermissionDto'
  *        400:
  *          $ref: '#/components/responses/400'
  *        401:
@@ -146,14 +150,14 @@ router.post('/', validateBodyMiddleware(UnitModel, [Groups.CREATE]), UnitsContro
  *        500:
  *          $ref: '#/components/responses/500'
  */
-router.put('/:id', validateBodyMiddleware(UnitModel, [Groups.UPDATE]), UnitsController.update);
+router.put('/:id', validateBodyMiddleware(PermissionModel, [Groups.UPDATE]), PermissionsController.update);
 
 /**
  *  @swagger
- *  /units/{id}:
+ *  /permission/{id}:
  *    get:
- *      summary: Get unit by id
- *      tags: [Units]
+ *      summary: Get permission by id
+ *      tags: [Permissions]
  *      security:
  *        - bearerAuth: []
  *      parameters:
@@ -163,15 +167,15 @@ router.put('/:id', validateBodyMiddleware(UnitModel, [Groups.UPDATE]), UnitsCont
  *            type: number
  *            example: 32767
  *          required: true
- *          description: Id unit
+ *          description: Id permission
  *
  *      responses:
  *        200:
- *          description: Unit
+ *          description: Permission
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/UnitDto'
+ *                $ref: '#/components/schemas/PermissionDto'
  *        400:
  *          $ref: '#/components/responses/400'
  *        401:
@@ -183,6 +187,6 @@ router.put('/:id', validateBodyMiddleware(UnitModel, [Groups.UPDATE]), UnitsCont
  *        500:
  *          $ref: '#/components/responses/500'
  */
-router.get('/:id', UnitsController.readById);
+router.get('/:id', PermissionsController.readById);
 
 export default router;

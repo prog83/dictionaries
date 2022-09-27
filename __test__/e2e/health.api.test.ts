@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import request from 'supertest';
 
-import { app } from 'app';
+import { app } from 'main';
 
 describe('GET /health', () => {
   it('should be 404', async () => {

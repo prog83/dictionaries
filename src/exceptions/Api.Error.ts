@@ -1,4 +1,4 @@
-class ApiError extends Error {
+export default class ApiError extends Error {
   timestamp: Date;
 
   constructor(public status: number, message: string, public errors: Array<unknown> = []) {
@@ -21,5 +21,3 @@ class ApiError extends Error {
     return new ApiError(404, message);
   }
 }
-
-export default ApiError;

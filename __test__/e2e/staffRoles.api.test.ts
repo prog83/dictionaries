@@ -5,16 +5,17 @@ import request from 'supertest';
 import 'env';
 import { app } from 'main';
 import db from 'db';
-import { UnitsRepository } from 'repositories';
-import { UnitDto } from 'dtos';
+import { StaffRolesRepository } from 'repositories';
+import { StaffRoleDto } from 'dtos';
 
 import { ERROR_BODY_BAD_REQUEST, ERROR_BODY_NOT_FOUND } from './errors';
 
-const baseRoute = '/units';
+const baseRoute = '/staff-roles';
 
-const unit: UnitDto = {
+const role: StaffRoleDto = {
   id: 0,
-  label: 'Some text',
+  label: 'test',
+  alias: 'test',
 };
 
 beforeAll(async () => {
@@ -22,25 +23,34 @@ beforeAll(async () => {
 });
 
 afterAll(async () => {
-  await UnitsRepository.removeUnit(unit.id);
+  await StaffRolesRepository.removeRole(role.id);
   await db.destroy();
 });
 
 describe(`POST ${baseRoute}`, () => {
   describe('check require data', () => {
-    it('shouldn`t create unit with not require id', async () => {
+    it('shouldn`t create staff role with not require id', async () => {
       const { status, body } = await request(app)
         .post(baseRoute)
-        .send({ ...unit, id: undefined });
+        .send({ ...role, id: undefined });
 
       expect(status).toBe(400);
       expect(body).toMatchObject(ERROR_BODY_BAD_REQUEST);
     });
 
-    it('shouldn`t create unit with not require label', async () => {
+    it('shouldn`t create staff role with not require label', async () => {
       const { status, body } = await request(app)
         .post(baseRoute)
-        .send({ ...unit, label: '' });
+        .send({ ...role, label: '' });
+
+      expect(status).toBe(400);
+      expect(body).toMatchObject(ERROR_BODY_BAD_REQUEST);
+    });
+
+    it('shouldn`t create staff role with not require alias', async () => {
+      const { status, body } = await request(app)
+        .post(baseRoute)
+        .send({ ...role, alias: '' });
 
       expect(status).toBe(400);
       expect(body).toMatchObject(ERROR_BODY_BAD_REQUEST);
@@ -48,36 +58,45 @@ describe(`POST ${baseRoute}`, () => {
   });
 
   describe('check validate data', () => {
-    it('shouldn`t create unit with no valid id', async () => {
+    it('shouldn`t create staff role with no valid id', async () => {
       const { status, body } = await request(app)
         .post(baseRoute)
-        .send({ ...unit, id: '0' });
+        .send({ ...role, id: '0' });
 
       expect(status).toBe(400);
       expect(body).toMatchObject(ERROR_BODY_BAD_REQUEST);
     });
 
-    it('shouldn`t create unit with no valid label', async () => {
+    it('shouldn`t create staff role with no valid label', async () => {
       const { status, body } = await request(app)
         .post(baseRoute)
-        .send({ ...unit, label: ''.padStart(51, '*') });
+        .send({ ...role, label: ''.padStart(51, '*') });
+
+      expect(status).toBe(400);
+      expect(body).toMatchObject(ERROR_BODY_BAD_REQUEST);
+    });
+
+    it('shouldn`t create staff role with no valid alias', async () => {
+      const { status, body } = await request(app)
+        .post(baseRoute)
+        .send({ ...role, alias: ''.padStart(51, '*') });
 
       expect(status).toBe(400);
       expect(body).toMatchObject(ERROR_BODY_BAD_REQUEST);
     });
   });
 
-  it('should create unit', () => request(app).post(baseRoute).send(unit).expect(201));
+  it('should create staff role', () => request(app).post(baseRoute).send(role).expect(201));
 });
 
 describe(`PUT ${baseRoute}/:id`, () => {
-  const url = `/units/${unit.id}`;
+  const url = `${baseRoute}/${role.id}`;
 
   describe('check require data', () => {
-    it('shouldn`t update unit with not require label', async () => {
+    it('shouldn`t update staff role with not require label', async () => {
       const { status, body } = await request(app)
         .put(url)
-        .send({ ...unit, label: '' });
+        .send({ ...role, label: '' });
 
       expect(status).toBe(400);
       expect(body).toMatchObject(ERROR_BODY_BAD_REQUEST);
@@ -85,21 +104,21 @@ describe(`PUT ${baseRoute}/:id`, () => {
   });
 
   describe('check validate', () => {
-    it('shouldn`t update unit not valid id', async () => {
-      const { status, body } = await request(app).put(`${baseRoute}/${Infinity}`).send({ label: unit.label });
+    it('shouldn`t update staff role not valid id', async () => {
+      const { status, body } = await request(app).put(`${baseRoute}/${Infinity}`).send({ label: role.label });
 
       expect(status).toBe(400);
       expect(body).toMatchObject(ERROR_BODY_BAD_REQUEST);
     });
 
-    it('shouldn`t update unit not exists unit', async () => {
-      const { status, body } = await request(app).put(`${baseRoute}/31999`).send({ label: unit.label });
+    it('shouldn`t update staff role not exists role', async () => {
+      const { status, body } = await request(app).put(`${baseRoute}/31999`).send({ label: role.label });
 
       expect(status).toBe(404);
       expect(body).toMatchObject(ERROR_BODY_NOT_FOUND);
     });
 
-    it('shouldn`t update unit with no valid label', async () => {
+    it('shouldn`t update staff role with no valid label', async () => {
       const { status, body } = await request(app)
         .put(url)
         .send({ label: ''.padStart(51, '*') });
@@ -109,11 +128,11 @@ describe(`PUT ${baseRoute}/:id`, () => {
     });
   });
 
-  it('should update unit', () => request(app).put(url).send({ label: unit.label }).expect(200));
+  it('should update staff role', () => request(app).put(url).send({ label: role.label }).expect(200));
 });
 
 describe(`GET ${baseRoute}`, () => {
-  it('should get units', async () => {
+  it('should get staff roles', async () => {
     const { status, body } = await request(app).get(baseRoute);
 
     expect(status).toBe(200);
@@ -121,29 +140,30 @@ describe(`GET ${baseRoute}`, () => {
     expect(body).toContainEqual({
       id: expect.any(Number),
       label: expect.any(String),
+      alias: expect.any(String),
     });
   });
 });
 
 describe(`GET ${baseRoute}/:id`, () => {
-  it('shouldn`t get unit not valid id', async () => {
+  it('shouldn`t get staff role not valid id', async () => {
     const { status, body } = await request(app).get(`${baseRoute}/${Infinity}`);
 
     expect(status).toBe(400);
     expect(body).toMatchObject(ERROR_BODY_BAD_REQUEST);
   });
 
-  it('shouldn`t get unit not exists id', async () => {
+  it('shouldn`t get staff role not exists id', async () => {
     const { status, body } = await request(app).get(`${baseRoute}/31999`);
 
     expect(status).toBe(404);
     expect(body).toMatchObject(ERROR_BODY_NOT_FOUND);
   });
 
-  it('should get unit', async () => {
-    const { status, body } = await request(app).get(`${baseRoute}/${unit.id}`);
+  it('should get staff role', async () => {
+    const { status, body } = await request(app).get(`${baseRoute}/${role.id}`);
 
     expect(status).toBe(200);
-    expect(body).toEqual(unit);
+    expect(body).toEqual(role);
   });
 });
