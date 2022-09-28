@@ -2,10 +2,10 @@ import type { Request, Response, NextFunction } from 'express';
 
 import { UnitsService } from 'services';
 import { ApiError } from 'exceptions';
-import type { Unit } from 'types/units';
+import { UnitDto } from 'dtos';
 
 export default class UnitsController {
-  static async read(req: Request, res: Response<Array<Unit>>, next: NextFunction) {
+  static async read(req: Request, res: Response<Array<UnitDto>>, next: NextFunction) {
     try {
       const unitsData = await UnitsService.getUnits();
 
@@ -15,7 +15,7 @@ export default class UnitsController {
     }
   }
 
-  static async create(req: Request<unknown, unknown, Unit>, res: Response<Unit>, next: NextFunction) {
+  static async create(req: Request<unknown, unknown, UnitDto>, res: Response<UnitDto>, next: NextFunction) {
     try {
       const { id, label } = req.body;
       const unitData = await UnitsService.createUnit({ id, label });
@@ -27,8 +27,8 @@ export default class UnitsController {
   }
 
   static async update(
-    req: Request<{ id: number }, unknown, Omit<Unit, 'id'>>,
-    res: Response<Unit>,
+    req: Request<{ id: number }, unknown, Omit<UnitDto, 'id'>>,
+    res: Response<UnitDto>,
     next: NextFunction,
   ) {
     try {
@@ -45,7 +45,7 @@ export default class UnitsController {
     }
   }
 
-  static async readById(req: Request<{ id: string }>, res: Response<Unit>, next: NextFunction) {
+  static async readById(req: Request<{ id: string }>, res: Response<UnitDto>, next: NextFunction) {
     try {
       const id = Number(req.params.id);
       if (!Number.isInteger(id)) {

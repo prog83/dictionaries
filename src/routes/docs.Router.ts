@@ -1,21 +1,10 @@
 import express from 'express';
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
-import logger from 'morgan';
-import 'reflect-metadata';
 
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 
-import 'env';
-import { notFoundMiddleware, errorMiddleware } from 'middlewares';
-import rootRouter from 'routes';
-import db from 'db';
-
 const { SCHEME, HOST } = process.env;
-export const PORT = parseInt(process.env.PORT ?? '', 10) || 3000;
-
-export const app = express();
+const PORT = parseInt(process.env.PORT ?? '', 10) || 3000;
 
 const options = {
   definition: {
@@ -39,11 +28,17 @@ const options = {
       },
     ],
   },
-  apis: ['./build/app.js', './build/routes/health.Router.js', './build/routes/units.Router.js'],
+  apis: [
+    './build/routes/health.Router.js',
+    './build/routes/docs.Router.js',
+    './build/routes/permissions.Router.js',
+    './build/routes/staffRoles.Router.js',
+    './build/routes/units.Router.js',
+  ],
 };
-
 const specs = swaggerJsdoc(options);
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
+
+const router = express.Router();
 
 /**
  *  @swagger
@@ -124,34 +119,6 @@ app.use('/docs', swaggerUi.serve, swaggerUi.setup(specs));
  *            schema:
  *              $ref: '#/components/schemas/Error'
  */
+router.use('/', swaggerUi.serve, swaggerUi.setup(specs));
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(cookieParser());
-// app.use(
-//   cors({
-//     origin: 'https://develop.portal.smartdisys.com',
-//     credentials: false,
-//   }),
-// );
-
-app.use(rootRouter);
-
-app.use(notFoundMiddleware);
-app.use(errorMiddleware);
-
-const run = async () => {
-  try {
-    await db.initialize();
-
-    app.listen(PORT, () => {
-      console.log(`App listening at http://localhost:${PORT}`);
-    });
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-if (require.main === module) {
-  run();
-}
+export default router;

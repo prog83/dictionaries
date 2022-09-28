@@ -1,2 +1,2 @@
-export { default as ApiError } from './api-error';
-export { default as ValidationError } from './validation-error';
+export { default as ApiError } from './Api.Error';
+export { default as ValidationError } from './Validation.Error';

@@ -1,7 +1,5 @@
 import express, { type Response } from 'express';
 
-import { PORT } from 'app';
-
 interface Health {
   uptime: number;
   env: string;
@@ -59,6 +57,8 @@ const router = express.Router();
  *              schema:
  *                $ref: '#/components/schemas/HealthDto'
  */
+
+const PORT = parseInt(process.env.PORT ?? '', 10) || 3000;
 
 router.get('/', (req, res: Response<Health>) => {
   res.json({

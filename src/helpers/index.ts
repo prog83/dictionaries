@@ -1,2 +1,2 @@
+export { default as ValidatorGroups } from './Validator.Groups';
 export * from './utils';
-export { default as ValidationGroups } from './validation-groups';

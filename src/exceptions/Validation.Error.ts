@@ -5,9 +5,9 @@ export default class ValidationError extends Error {
 
   status: number = 400;
 
-  errors: Array<unknown>;
+  errors: Array<unknown> = [];
 
-  constructor(errors: Array<ClassValidationError> = []) {
+  constructor(errors: Array<ClassValidationError>) {
     const err = errors.map(({ property, constraints }) => ({ path: property, constraints }));
     const message = Object.values(err[0].constraints ?? {}).join('; ');
 

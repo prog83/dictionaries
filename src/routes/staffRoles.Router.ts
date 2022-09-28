@@ -1,15 +1,15 @@
 import express from 'express';
 
 import { validateBodyMiddleware } from 'middlewares';
-import { UnitsController } from 'controllers';
-import { UnitModel } from 'models';
+import { StaffRolesController } from 'controllers';
+import { StaffRoleModel } from 'models';
 import { ValidatorGroups as Groups } from 'helpers';
 
 /**
  *  @swagger
  *  components:
  *    schemas:
- *      UnitDto:
+ *      StaffRoleDto:
  *        type: object
  *        required:
  *          - id
@@ -19,6 +19,10 @@ import { ValidatorGroups as Groups } from 'helpers';
  *            type: number
  *            description: Id
  *            example: 32767
+ *          alias:
+ *            type: string
+ *            description: Alias ldap
+ *            example: Some text
  *          label:
  *            type: string
  *            description: Label
@@ -28,30 +32,30 @@ import { ValidatorGroups as Groups } from 'helpers';
 /**
  *  @swagger
  *  tags:
- *    name: Units
- *    description: API for units dictionary
+ *    name: StaffRoles
+ *    description: API for staff roles dictionary
  */
 
 const router = express.Router();
 
 /**
  *  @swagger
- *  /units:
+ *  /staff-roles:
  *    get:
- *      summary: Get units
- *      tags: [Units]
+ *      summary: Get staff  roles
+ *      tags: [StaffRoles]
  *      security:
  *        - bearerAuth: []
  *
  *      responses:
  *        200:
- *          description: List units
+ *          description: List staff roles
  *          content:
  *            application/json:
  *              schema:
  *                type: array
  *                items:
- *                  $ref: '#/components/schemas/UnitDto'
+ *                  $ref: '#/components/schemas/StaffRoleDto'
  *        401:
  *          $ref: '#/components/responses/401'
  *        403:
@@ -61,14 +65,14 @@ const router = express.Router();
  *        500:
  *          $ref: '#/components/responses/500'
  */
-router.get('/', UnitsController.read);
+router.get('/', StaffRolesController.read);
 
 /**
  *  @swagger
- *  /units:
+ *  /staff-roles:
  *    post:
- *      summary: Create unit
- *      tags: [Units]
+ *      summary: Create staff role
+ *      tags: [StaffRoles]
  *      security:
  *        - bearerAuth: []
  *      requestBody:
@@ -76,15 +80,15 @@ router.get('/', UnitsController.read);
  *        content:
  *          application/json:
  *            schema:
- *              $ref: '#/components/schemas/UnitDto'
+ *              $ref: '#/components/schemas/StaffRoleDto'
  *
  *      responses:
  *        201:
- *          description: Created unit
+ *          description: Created staff role
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/UnitDto'
+ *                $ref: '#/components/schemas/StaffRoleDto'
  *        400:
  *          $ref: '#/components/responses/400'
  *        401:
@@ -96,14 +100,14 @@ router.get('/', UnitsController.read);
  *        500:
  *          $ref: '#/components/responses/500'
  */
-router.post('/', validateBodyMiddleware(UnitModel, [Groups.CREATE]), UnitsController.create);
+router.post('/', validateBodyMiddleware(StaffRoleModel, [Groups.CREATE]), StaffRolesController.create);
 
 /**
  *  @swagger
- *  /units/{id}:
+ *  /staff-roles/{id}:
  *    put:
- *      summary: Update unit
- *      tags: [Units]
+ *      summary: Update staff role
+ *      tags: [StaffRoles]
  *      security:
  *        - bearerAuth: []
  *      parameters:
@@ -113,7 +117,7 @@ router.post('/', validateBodyMiddleware(UnitModel, [Groups.CREATE]), UnitsContro
  *            type: number
  *            example: 32767
  *          required: true
- *          description: Id unit
+ *          description: Id staff role
  *      requestBody:
  *        required: true
  *        content:
@@ -130,11 +134,11 @@ router.post('/', validateBodyMiddleware(UnitModel, [Groups.CREATE]), UnitsContro
  *
  *      responses:
  *        200:
- *          description: Updated unit
+ *          description: Updated staff role
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/UnitDto'
+ *                $ref: '#/components/schemas/StaffRoleDto'
  *        400:
  *          $ref: '#/components/responses/400'
  *        401:
@@ -146,14 +150,14 @@ router.post('/', validateBodyMiddleware(UnitModel, [Groups.CREATE]), UnitsContro
  *        500:
  *          $ref: '#/components/responses/500'
  */
-router.put('/:id', validateBodyMiddleware(UnitModel, [Groups.UPDATE]), UnitsController.update);
+router.put('/:id', validateBodyMiddleware(StaffRoleModel, [Groups.UPDATE]), StaffRolesController.update);
 
 /**
  *  @swagger
- *  /units/{id}:
+ *  /staff-roles/{id}:
  *    get:
- *      summary: Get unit by id
- *      tags: [Units]
+ *      summary: Get staff role by id
+ *      tags: [StaffRoles]
  *      security:
  *        - bearerAuth: []
  *      parameters:
@@ -163,15 +167,15 @@ router.put('/:id', validateBodyMiddleware(UnitModel, [Groups.UPDATE]), UnitsCont
  *            type: number
  *            example: 32767
  *          required: true
- *          description: Id unit
+ *          description: Id staff role
  *
  *      responses:
  *        200:
- *          description: Unit
+ *          description: Staff role
  *          content:
  *            application/json:
  *              schema:
- *                $ref: '#/components/schemas/UnitDto'
+ *                $ref: '#/components/schemas/StaffRoleDto'
  *        400:
  *          $ref: '#/components/responses/400'
  *        401:
@@ -183,6 +187,6 @@ router.put('/:id', validateBodyMiddleware(UnitModel, [Groups.UPDATE]), UnitsCont
  *        500:
  *          $ref: '#/components/responses/500'
  */
-router.get('/:id', UnitsController.readById);
+router.get('/:id', StaffRolesController.readById);
 
 export default router;
